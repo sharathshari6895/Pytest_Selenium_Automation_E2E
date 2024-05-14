@@ -22,7 +22,7 @@ jobs:
       - name: Install Appium
         run: |
           npm install -g appium@latest
-          npm install -g appium-uiautomator2-driver@latest
+          npm install appium-uiautomator2-driver@3.0.4 --save-dev
           appium -v
           appium driver list --installed
           
