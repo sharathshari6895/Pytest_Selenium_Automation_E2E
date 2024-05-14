@@ -1,50 +1,62 @@
-name: Python Tests
+trigger:
+  - master
 
-on: [push, pull_request]
+pool:
+  vmImage: ubuntu-latest
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [2.7, 3.5, 3.6, 3.7, 3.9]
+strategy:
+  matrix:
+    Python27:
+      python.version: '2.7'
+    Python35:
+      python.version: '3.5'
+    Python36:
+      python.version: '3.6'
+    Python37:
+      python.version: '3.7'
 
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(python.version)'
+    displayName: 'Use Python $(python.version)'
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: 'Install dependencies'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+  - script: |
+      pip install pytest pytest-azurepipelines
+      pytest
+    displayName: 'pytest'
 
-      - name: Run tests with pytest
-        run: |
-          pip install pytest
-          pytest
+- name: Set up Node.js
+  uses: actions/setup-node@v2
+  with:
+    node-version: '14' # Adjust as needed
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+- name: Check Node.js and npm version
+  run: |
+    node -v
+    npm -v
 
-      - name: Check Node.js and npm version
-        run: |
-          node -v
-          npm -v
+- name: Install Appium
+  run: |
+    npm install -g appium@latest
+    npm install appium-uiautomator2-driver@3.0.4 --save-dev
+    appium -v
+    appium driver list --installed
 
-      - name: Install Appium and UiAutomator2 Driver
-        run: |
-          npm install -g appium@latest
-          appium driver install uiautomator2
-          npm install appium-uiautomator2-driver@3.0.4 --save-dev
-          appium -v
-          appium driver list --installed
+- name: Set up Python
+  uses: actions/setup-python@v2
+  with:
+    python-version: 3.9
 
-      - name: Run tests with xvfb
-        run: xvfb-run -a pytest
+- name: Install dependencies
+  run: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+
+- name: Run tests
+  run: xvfb-run -a pytest
