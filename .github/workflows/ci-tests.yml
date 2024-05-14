@@ -30,4 +30,4 @@ jobs:
 
     - name: Run tests
       run: |
-        venv/bin/pytest
+        pytest
