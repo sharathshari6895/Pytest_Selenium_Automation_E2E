@@ -1,11 +1,9 @@
 name: Python Tests
-
 on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
 
@@ -25,7 +23,15 @@ jobs:
           npm install appium-uiautomator2-driver@3.0.4 --save-dev
           appium -v
           appium driver list --installed
-          
+
+      - name: Check Appium UiAutomator2 driver (**Change here**)
+        run: |
+          appium driver list --installed
+          if [[ ! $(appium driver list --installed | grep uiautomator2) ]]; then
+            echo "UiAutomator2 driver not found. Reinstalling..."
+            npm install appium-uiautomator2-driver@3.0.4 --save-dev
+          fi
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -39,7 +45,7 @@ jobs:
       - name: Run tests
         run: |
           xvfb-run -a pytest --alluredir=./allure_results
-      
+
       - name: Generate Allure report
         run: |
           allure generate ./allure_results -o ./allure-report --clean
