@@ -56,9 +56,3 @@ jobs:
           name: allure-report
           path: ./allure-report
 
-**Changes made:**
-
-- The comments now clearly indicate the section where the change is made ("**Change here**").
-- The code within the "Check Appium UiAutomator2 driver" step remains the same. This step verifies if the driver is installed and reinstalls it if not found.
-
-**Remember to replace `"requirements.txt"` with the actual path to your requirements file.** This file should contain the Python dependencies needed for your tests.
