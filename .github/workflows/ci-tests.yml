@@ -25,7 +25,7 @@ jobs:
           npm install -g appium-uiautomator2-driver@latest
           appium -v
           appium driver list --installed
-          print("*************************")
+          
 
       - name: Set up Python
         uses: actions/setup-python@v2
