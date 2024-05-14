@@ -12,21 +12,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '14' # Adjust the Node.js version as needed
 
       - name: Check Node.js and npm version
         run: |
           node -v
           npm -v
 
-      - name: Install Appium
+      - name: Install Appium and Appium UIAutomator2 driver
         run: |
           npm install -g appium@latest
           npm install appium-uiautomator2-driver@3.0.4 --save-dev
           appium -v
           appium driver list --installed
           
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -38,4 +37,15 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        run: xvfb-run -a pytest
+        run: |
+          xvfb-run -a pytest --alluredir=./allure_results
+      
+      - name: Generate Allure report
+        run: |
+          allure generate ./allure_results -o ./allure-report --clean
+
+      - name: Upload Allure report artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: ./allure-report
