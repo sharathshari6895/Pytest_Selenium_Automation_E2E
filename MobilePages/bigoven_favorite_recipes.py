@@ -127,13 +127,8 @@ class BigOvenFavoriteRecipe(AppiumEvents):
 
     """Checks if Recipe is present."""
     def is_checking_recipe_presence(self):
-        try:
-            self.find_element(self.check_selected_recipe_locator)
-            logging.info("Recipe is present")
-            return True
-        except NoSuchElementException:
-            logging.error("Element is not present")
-            return True
+        self.find_element(self.check_selected_recipe_locator)
+        return True
 
     """Checks if a recipe is still present after removing."""
     def checking_recipe_presence_after_removing(self):
