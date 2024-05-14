@@ -1,0 +1,6 @@
+[32mINFO    [0m root:test_login.py:32 Starting test_invalid_signin
+[31m[1mERROR   [0m root:test_login.py:43 Assertion Error occurred: assert 'https://www.saucedemo.com/' == 'https://www....nventory.html'
+  - https://www.saucedemo.com/inventory.html
+  ?                           --------------
+  + https://www.saucedemo.com/
+[32mINFO    [0m root:test_login.py:50 Ending test_invalid_signin

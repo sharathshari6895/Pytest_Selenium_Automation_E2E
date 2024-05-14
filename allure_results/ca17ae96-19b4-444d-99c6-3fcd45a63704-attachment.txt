@@ -1,0 +1,2 @@
+[32mINFO    [0m root:test_login.py:29 Starting test_invalid_signin
+[32mINFO    [0m root:test_login.py:32 Logging with invalid credentials

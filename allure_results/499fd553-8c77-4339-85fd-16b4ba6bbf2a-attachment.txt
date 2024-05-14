@@ -1,0 +1,5 @@
+[32mINFO    [0m root:test_bigoven.py:69 Starting  test_remove_recipe_from_favorites
+[32mINFO    [0m root:test_bigoven.py:74 Login Successful
+[32mINFO    [0m root:test_bigoven.py:78 New Recipe added successfully
+[32mINFO    [0m root:test_bigoven.py:83 Presence of newly added recipe 
+[32mINFO    [0m root:test_bigoven.py:86 Ending test_adding_new_recipe

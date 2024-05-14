@@ -1,0 +1,35 @@
+{
+    "auth_payload": {
+        "username": "admin",
+        "password": "password123"
+    },
+    "booking_data": {
+        "firstname": "Harry",
+        "lastname": "Potter",
+        "totalprice": 500,
+        "depositpaid": true,
+        "bookingdates": {
+            "checkin": "2024-03-25",
+            "checkout": "2024-03-30"
+        },
+        "additionalneeds": "Breakfast"
+    },
+     "updated_booking_data": {
+        "firstname": "Jane",
+        "lastname": "Doe",
+        "totalprice": 111,
+        "depositpaid": true,
+        "bookingdates": {
+            "checkin": "2018-01-01",
+            "checkout": "2019-01-01"
+        },
+        "additionalneeds": "Breakfast"
+    },
+  "patch_data": {
+
+    "firstname" : "James",
+    "lastname" : "Brown"
+
+  }
+
+}

@@ -1,0 +1,3 @@
+[32mINFO    [0m root:test_login.py:17 Starting test_valid_signin
+[32mINFO    [0m root:test_login.py:20 Logging with valid credentials
+[32mINFO    [0m root:test_login.py:24 Ending test_valid_signin

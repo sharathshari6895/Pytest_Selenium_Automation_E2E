@@ -1,0 +1,30 @@
+Total violations found: 4
+Critical violations: 1
+Moderate violations: 3
+Serious violations: 0
+
+Violation details:
+
+Violation 1:
+Description: Ensures every form element has a label
+Impact: critical
+Help: Form elements must have labels
+Help URL: https://dequeuniversity.com/rules/axe/3.1/label?application=axeAPI
+
+Violation 2:
+Description: Ensures the page has only one main landmark and each iframe in the page has at most one main landmark
+Impact: moderate
+Help: Page must have one main landmark
+Help URL: https://dequeuniversity.com/rules/axe/3.1/landmark-one-main?application=axeAPI
+
+Violation 3:
+Description: Ensure that the page, or at least one of its frames contains a level-one heading
+Impact: moderate
+Help: Page must contain a level-one heading
+Help URL: https://dequeuniversity.com/rules/axe/3.1/page-has-heading-one?application=axeAPI
+
+Violation 4:
+Description: Ensures all page content is contained by landmarks
+Impact: moderate
+Help: All page content must be contained by landmarks
+Help URL: https://dequeuniversity.com/rules/axe/3.1/region?application=axeAPI

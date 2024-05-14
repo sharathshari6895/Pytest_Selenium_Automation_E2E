@@ -1,0 +1,9 @@
+{
+         "userName" :"standard_user",
+         "PASSWORD" :"secret_sauce",
+         "INVALID PASSWORD": "Admin@123",
+          "firstName" : "Harry",
+          "lastName" : "Potter",
+          "Zipcode": "987867"
+
+}

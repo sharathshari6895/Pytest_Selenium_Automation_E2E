@@ -1,0 +1,3 @@
+[32mINFO    [0m root:test_checkout.py:15 Starting test_checkout
+[32mINFO    [0m root:test_checkout.py:22 Adding user details for checkout
+[32mINFO    [0m root:test_checkout.py:28 Checkout Successful

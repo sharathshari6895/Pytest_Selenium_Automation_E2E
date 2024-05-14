@@ -1,0 +1,2 @@
+[32mINFO    [0m root:test_bigoven.py:17 Starting test_adding_recipe_to_favorites
+[1m[31mERROR   [0m root:bigoven_favorite_recipes.py:77 bigOven_logo is not present

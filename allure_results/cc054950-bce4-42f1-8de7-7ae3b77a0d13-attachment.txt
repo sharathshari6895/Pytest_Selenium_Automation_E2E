@@ -1,0 +1,3 @@
+[32mINFO    [0m root:test_accessibility.py:13 Starting test_accessibility_on_url
+[32mINFO    [0m root:test_accessibility.py:17 Finding  violations completed
+[32mINFO    [0m root:test_accessibility.py:18 Ending test_accessibility_on_url
