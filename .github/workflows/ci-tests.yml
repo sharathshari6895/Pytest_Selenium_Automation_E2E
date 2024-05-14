@@ -21,7 +21,8 @@ jobs:
 
       - name: Install Appium
         run: |
-          npm install -g appium
+          npm install -g appium@latest
+          npm install -g appium-uiautomator2-driver@latest
           appium -v
 
       - name: Set up Python
