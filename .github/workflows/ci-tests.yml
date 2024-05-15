@@ -1,4 +1,5 @@
 name: Python Tests
+
 on: [push, pull_request]
 
 jobs:
@@ -24,11 +25,11 @@ jobs:
           npm install appium-uiautomator2-driver@3.0.4 --save-dev
           appium -v
           appium driver list --installed
-
+          
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: 3.9
 
       - name: Install dependencies
         run: |
@@ -36,12 +37,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        env:
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
         run: |
           xvfb-run -a pytest --alluredir=./allure_results
-
+      
       - name: Generate Allure report
         run: |
           allure generate ./allure_results -o ./allure-report --clean
