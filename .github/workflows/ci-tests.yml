@@ -35,11 +35,8 @@ jobs:
           export ANDROID_HOME=$HOME/android-sdk
           export PATH=$PATH:$ANDROID_HOME/tools/bin
           yes | sdkmanager --licenses
-          
-      - name: Create Android emulator
-        run: |
-          sdkmanager "system-images;android-29;google_apis;x86"
-          echo "no" | avdmanager --verbose create avd --force --name "test_emulator" --package "system-images;android-29;google_apis;x86" --abi "x86" --device "pixel" --sdcard 512M
+          sdkmanager "system-images;android-29;google_apis;x86" || echo "Already installed"
+          echo "no" | avdmanager --verbose create avd --force --name "test_emulator" --package "system-images;android-29;google_apis;x86" --abi "x86" --device "pixel" --sdcard 512M || echo "Emulator already exists"
 
       - name: Set up Python
         uses: actions/setup-python@v2
