@@ -26,8 +26,19 @@ jobs:
           appium -v
           appium driver list --installed
           
+      - name: Install Android SDK
+        run: |
+          sudo apt update
+          sudo apt install -y openjdk-11-jdk
+          wget https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip
+          unzip -qq commandlinetools-linux-6858069_latest.zip -d $HOME/android-sdk
+          export ANDROID_HOME=$HOME/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/tools/bin
+          yes | sdkmanager --licenses
+          
       - name: Create Android emulator
         run: |
+          sdkmanager "system-images;android-29;google_apis;x86"
           echo "no" | avdmanager --verbose create avd --force --name "test_emulator" --package "system-images;android-29;google_apis;x86" --abi "x86" --device "pixel" --sdcard 512M
 
       - name: Set up Python
