@@ -38,7 +38,7 @@ jobs:
           
       - name: Run tests
         run: |
-          xvfb-run -a pytest --alluredir=./allure_results
+          pytest --alluredir=./allure_results
       
       - name: Generate Allure report
         run: |
