@@ -27,7 +27,6 @@ jobs:
           appium driver list --installed
           
       - name: Install Android SDK
-        shell: powershell
         run: |
           choco install -y openjdk11
           choco install -y android-sdk
