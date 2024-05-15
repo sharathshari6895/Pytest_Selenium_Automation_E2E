@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -12,7 +12,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14' # Adjust the Node.js version as needed
+          node-version: '14'
 
       - name: Check Node.js and npm version
         run: |
@@ -30,9 +30,9 @@ jobs:
         run: |
           choco install -y openjdk11
           choco install -y android-sdk
-          echo "y" | sdkmanager --licenses
-          sdkmanager "platforms;android-29" "system-images;android-29;google_apis;x86" || echo "Already installed"
-          echo "no" | avdmanager --verbose create avd --force --name "test_emulator" --package "system-images;android-29;google_apis;x86" --abi "x86" --device "pixel" --sdcard 512M || echo "Emulator already exists"
+          echo "y" | $env:ANDROID_HOME\tools\bin\sdkmanager.bat --licenses
+          $env:ANDROID_HOME\tools\bin\sdkmanager.bat "platforms;android-29" "system-images;android-29;google_apis;x86" || echo "Already installed"
+          echo "no" | $env:ANDROID_HOME\tools\bin\avdmanager.bat --verbose create avd --force --name "test_emulator" --package "system-images;android-29;google_apis;x86" --abi "x86" --device "pixel" --sdcard 512M || echo "Emulator already exists"
 
       - name: Set up Python
         uses: actions/setup-python@v2
