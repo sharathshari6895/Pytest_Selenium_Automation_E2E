@@ -25,14 +25,6 @@ jobs:
           npm install appium-uiautomator2-driver@3.0.4 --save-dev
           appium -v
           appium driver list --installed
-          
-      - name: Install Android SDK and set up AVD
-        run: |
-          choco install -y openjdk11
-          choco install -y android-sdk
-          echo "yes" | $env:ANDROID_HOME\tools\bin\sdkmanager.bat --licenses
-          $env:ANDROID_HOME\tools\bin\sdkmanager.bat "platforms;android-29" "system-images;android-29;google_apis;x86" || echo "Already installed"
-          echo "no" | $env:ANDROID_HOME\tools\bin\avdmanager.bat --verbose create avd --force --name "test_emulator" --package "system-images;android-29;google_apis;x86" --abi "x86" --device "pixel" --sdcard 512M || echo "Emulator already exists"
 
       - name: Set up Python
         uses: actions/setup-python@v2
