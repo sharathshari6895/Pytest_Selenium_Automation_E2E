@@ -26,9 +26,14 @@ jobs:
           appium -v
           appium driver list --installed
           
-      - name: Install Android emulator
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          sdk-platform: "android-29" # Adjust the SDK platform version as needed
+          sdk-components: "platform-tools,build-tools-29.0.3,platforms;android-29,extras;google;google_play_services,extras;google;google_play_services" # Adjust the SDK components as needed
+
+      - name: Create Android emulator
         run: |
-          sdkmanager "system-images;android-29;google_apis;x86"
           echo "no" | avdmanager --verbose create avd --force --name "test_emulator" --package "system-images;android-29;google_apis;x86" --abi "x86"
 
       - name: Set up Python
