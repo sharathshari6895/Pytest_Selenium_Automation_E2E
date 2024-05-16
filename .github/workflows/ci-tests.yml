@@ -65,6 +65,9 @@ jobs:
       - name: Set up ADB
         run: sudo apt-get install -y android-tools-adb
 
+      - name: List files in android directory
+        run: ls ../.././snippet_uiautomator/android/
+
       - name: Install APK on device
         run: adb install ../../snippet_uiautomator/android/uiautomator.apk
 
