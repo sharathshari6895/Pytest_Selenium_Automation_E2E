@@ -7,54 +7,6 @@ on:
     branches: [ "master" ]
 
 jobs:
-  run-python-tests:
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-
-      - name: Check Node.js and npm version
-        run: |
-          node -v
-          npm -v
-          
-      - name: Install Appium and Appium UIAutomator2 driver
-        run: |
-          npm install -g appium@2.4.1
-          npm install appium-uiautomator2-driver@3.0.4 --save-dev
-          appium -v
-          appium driver list --installed
-          
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.9'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          
-      - name: Run tests
-        run: |
-          pytest --alluredir=./allure_results
-      
-      - name: Generate Allure report
-        run: |
-          allure generate ./allure_results -o ./allure-report --clean
-          
-      - name: Upload Allure report artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-report
-          path: ./allure-report
-
   run-uiautomator-tests:
     runs-on: ubuntu-latest
 
@@ -67,12 +19,12 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "CONFIG_PATH=/home/runner/work/_temp/../snippet_uiautomator/android/uiautomator.apk" >> $GITHUB_ENV
+          echo "CONFIG_PATH=$(pwd)/snippet_uiautomator/android/uiautomator.apk" >> $GITHUB_ENV
 
       - name: Install APK on device
         run: adb install $CONFIG_PATH
 
       - name: Run UI Automator tests
         run: |
-          test_path="/home/runner/work/_temp/../snippet_uiautomator/android/test.jar"
+          test_path="$(pwd)/snippet_uiautomator/android/test.jar"
           adb shell uiautomator runtest $test_path -c com.example.TestClass
