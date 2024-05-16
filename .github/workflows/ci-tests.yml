@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  run-python-tests:
+  setup-and-run-tests:
     runs-on: windows-latest
 
     steps:
@@ -30,6 +30,16 @@ jobs:
           npm install appium-uiautomator2-driver@3.0.4 --save-dev
           appium -v
           appium driver list --installed
+
+      - name: Start Android Emulator
+        run: |
+          # Start the emulator here, replacing $EMULATOR_NAME with your emulator name
+          emulator @$EMULATOR_NAME -no-snapshot -no-audio -no-window
+
+      - name: Wait for Emulator to Boot
+        run: |
+          # Wait for the emulator to fully boot before proceeding with tests
+          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -54,23 +64,3 @@ jobs:
         with:
           name: allure-report
           path: ./allure-report
-
-  run-uiautomator-tests:
-    name: UI Automator Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Android emulator
-        uses: reactivecircus/setup-android-emulator@v1.0.0
-        with:
-          api-level: 30
-          target: default
-
-      - name: Install APK on device
-        run: adb install $GITHUB_WORKSPACE/UI_Automator/android/uiautomator.apk
-
-      - name: Run UI Automator tests
-        run: adb shell uiautomator runtest $GITHUB_WORKSPACE/UI_Automator/android/test.jar -c com.example.TestClass
