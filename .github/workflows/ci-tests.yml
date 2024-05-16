@@ -28,13 +28,13 @@ jobs:
         run: |
           node -v
           npm -v
-          
+
       - name: Install Appium and Appium UIAutomator2 driver with peer dependencies
         run: |
           npm install -g appium@2.4.1
           npm install appium-uiautomator2-driver@3.0.4 --save-dev
           npm install adbkit-apkreader@^2.1.0 --save-dev
-          npm install @wdio/sync@^7.6.15 --save-dev
+          npm install @wdio/sync@7.6.15 --save-dev  # Update version to specific version
           # Add other peer dependencies as needed
           appium -v
           appium driver list --installed
@@ -58,15 +58,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          
+
       - name: Run tests
         run: |
           pytest --alluredir=./allure_results
-      
+
       - name: Generate Allure report
         run: |
           allure generate ./allure_results -o ./allure-report --clean
-          
+
       - name: Upload Allure report artifacts
         uses: actions/upload-artifact@v3
         with:
