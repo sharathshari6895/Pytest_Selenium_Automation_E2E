@@ -44,7 +44,7 @@ jobs:
       - name: Wait for Emulator to Boot
         run: |
           # Wait for the emulator to fully boot before proceeding with tests
-          "${{ env.ANDROID_HOME }}/platform-tools/adb wait-for-device shell 'while [[ -z $(${env:ANDROID_HOME}\platform-tools\adb shell getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'"
+           "${{ env.ANDROID_HOME }}/platform-tools/adb wait-for-device shell 'while [[ -z $(${env:ANDROID_HOME}\platform-tools\adb shell getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'"
 
 
 
