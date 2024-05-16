@@ -67,16 +67,12 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          current_dir=$(dirname "$0")
-          config_path="$current_dir/../snippet_uiautomator/android/uiautomator.apk"
-          echo "Config Path: $config_path"
-          echo "::set-env name=CONFIG_PATH::$config_path"
+          echo "CONFIG_PATH=/home/runner/work/_temp/../snippet_uiautomator/android/uiautomator.apk" >> $GITHUB_ENV
 
       - name: Install APK on device
         run: adb install $CONFIG_PATH
 
       - name: Run UI Automator tests
         run: |
-          current_dir=$(dirname "$0")
-          test_path="$current_dir/../snippet_uiautomator/android/test.jar"
+          test_path="/home/runner/work/_temp/../snippet_uiautomator/android/test.jar"
           adb shell uiautomator runtest $test_path -c com.example.TestClass
