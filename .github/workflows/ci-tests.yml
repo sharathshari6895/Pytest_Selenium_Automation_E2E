@@ -64,7 +64,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Android emulator
-        uses: reactivecircus/setup-android-emulator@v2
+        uses: reactivecircus/setup-android-emulator@v1
         with:
           api-level: 30
           target: default
