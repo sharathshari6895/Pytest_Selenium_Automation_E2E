@@ -56,29 +56,30 @@ jobs:
           path: ./allure-report
 
   run-uiautomator-tests:
+    name: UI Automator Tests
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List root directory
+      - name: List files in root directory
         run: ls $GITHUB_WORKSPACE
 
-      - name: List .github directory
+      - name: List files in .github directory
         run: ls $GITHUB_WORKSPACE/.github
 
-      - name: List workflows directory
+      - name: List files in workflows directory
         run: ls $GITHUB_WORKSPACE/.github/workflows
 
       - name: List files in snippet_uiautomator/android directory
-        run: ls $GITHUB_WORKSPACE/UI_Automator/android
+        run: ls $GITHUB_WORKSPACE/snippet_uiautomator/android
 
       - name: Set up ADB
         run: sudo apt-get install -y android-tools-adb
 
       - name: Install APK on device
-        run: adb install $GITHUB_WORKSPACE/UI_Automator/android/uiautomator.apk
+        run: adb install $GITHUB_WORKSPACE/snippet_uiautomator/android/uiautomator.apk
 
       - name: Run UI Automator tests
-        run: adb shell uiautomator runtest $GITHUB_WORKSPACE/UI_Automator/android/test.jar -c com.example.TestClass
+        run: adb shell uiautomator runtest $GITHUB_WORKSPACE/snippet_uiautomator/android/test.jar -c com.example.TestClass
