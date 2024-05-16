@@ -31,6 +31,14 @@ jobs:
           appium -v
           appium driver list --installed
 
+      - name: Add Android SDK tools to PATH
+        run: |
+          echo "##[add-path]${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin"
+          echo "##[add-path]${{ env.ANDROID_HOME }}/emulator"
+          echo "##[add-path]${{ env.ANDROID_HOME }}/tools"
+          echo "##[add-path]${{ env.ANDROID_HOME }}/platform-tools"
+          echo "##[add-path]${{ env.ANDROID_HOME }}/build-tools/${{ env.ANDROID_BUILD_TOOLS_VERSION }}"
+
       - name: Start Android Emulator
         run: |
           # Start the emulator here, replacing $EMULATOR_NAME with your emulator name
