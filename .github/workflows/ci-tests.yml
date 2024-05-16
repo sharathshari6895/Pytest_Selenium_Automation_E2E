@@ -24,10 +24,13 @@ jobs:
           node -v
           npm -v
           
-      - name: Install Appium and Appium UIAutomator2 driver
+      - name: Install Appium and Appium UIAutomator2 driver with peer dependencies
         run: |
           npm install -g appium@2.4.1
           npm install appium-uiautomator2-driver@3.0.4 --save-dev
+          npm install adbkit-apkreader@^2.1.0 --save-dev
+          npm install @wdio/sync@^7.6.15 --save-dev
+          # Add other peer dependencies as needed
           appium -v
           appium driver list --installed
 
