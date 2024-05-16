@@ -59,14 +59,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up ADB
-      run: sudo apt-get install -y android-tools-adb
+      - name: Set up ADB
+        run: sudo apt-get install -y android-tools-adb
 
-    - name: Install APK on device
-      run: adb install ./snippet_uiautomator/android/uiautomator.apk
+      - name: Install APK on device
+        run: adb install ../.././snippet_uiautomator/android/uiautomator.apk
 
-    - name: Run UI Automator tests
-      run: adb shell uiautomator runtest ./snippet_uiautomator/android/test.jar -c com.example.TestClass
+      - name: Run UI Automator tests
+        run: adb shell uiautomator runtest ../.././snippet_uiautomator/android/test.jar -c com.example.TestClass
