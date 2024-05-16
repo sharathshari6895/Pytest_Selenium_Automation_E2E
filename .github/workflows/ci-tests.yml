@@ -63,20 +63,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List files in root directory
-        run: ls $GITHUB_WORKSPACE
-
-      - name: List files in .github directory
-        run: ls $GITHUB_WORKSPACE/.github
-
-      - name: List files in workflows directory
-        run: ls $GITHUB_WORKSPACE/.github/workflows
-
-      - name: List files in snippet_uiautomator/android directory
-        run: ls $GITHUB_WORKSPACE/UI_Automator/android
-
-      - name: Set up ADB
-        run: sudo apt-get install -y android-tools-adb
+      - name: Set up Android emulator
+        uses: reactivecircus/setup-android-emulator@v2
+        with:
+          api-level: 30
+          target: default
 
       - name: Install APK on device
         run: adb install $GITHUB_WORKSPACE/UI_Automator/android/uiautomator.apk
