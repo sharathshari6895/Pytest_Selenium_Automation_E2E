@@ -73,13 +73,13 @@ jobs:
         run: ls $GITHUB_WORKSPACE/.github/workflows
 
       - name: List files in snippet_uiautomator/android directory
-        run: ls $GITHUB_WORKSPACE/snippet_uiautomator/android
+        run: ls $GITHUB_WORKSPACE/UI_Automator/android
 
       - name: Set up ADB
         run: sudo apt-get install -y android-tools-adb
 
       - name: Install APK on device
-        run: adb install $GITHUB_WORKSPACE/snippet_uiautomator/android/uiautomator.apk
+        run: adb install $GITHUB_WORKSPACE/UI_Automator/android/uiautomator.apk
 
       - name: Run UI Automator tests
-        run: adb shell uiautomator runtest $GITHUB_WORKSPACE/snippet_uiautomator/android/test.jar -c com.example.TestClass
+        run: adb shell uiautomator runtest $GITHUB_WORKSPACE/UI_Automator/android/test.jar -c com.example.TestClass
