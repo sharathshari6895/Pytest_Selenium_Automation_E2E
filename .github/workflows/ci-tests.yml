@@ -39,7 +39,7 @@ jobs:
       - name: Start Android Emulator
         run: |
           # Start the emulator here, replacing $EMULATOR_NAME with your emulator name
-          "${{ env.ANDROID_HOME }}/emulator/emulator" @$EMULATOR_NAME -no-snapshot -no-audio -no-window
+          "${{ env.ANDROID_HOME }}/emulator/emulator @$EMULATOR_NAME -no-snapshot -no-audio -no-window"
 
       - name: Wait for Emulator to Boot
         run: |
