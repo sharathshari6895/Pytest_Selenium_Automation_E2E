@@ -30,7 +30,7 @@ jobs:
           npm install appium-uiautomator2-driver@3.0.4 --save-dev
           appium -v
           appium driver list --installed
-
+          
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -65,11 +65,18 @@ jobs:
       - name: Set up ADB
         run: sudo apt-get install -y android-tools-adb
 
-      - name: List files in android directory
-        run: ls ../snippet_uiautomator/android/
+      - name: Set up environment variables
+        run: |
+          current_dir=$(dirname "$0")
+          config_path="$current_dir/../snippet_uiautomator/android/uiautomator.apk"
+          echo "Config Path: $config_path"
+          echo "::set-env name=CONFIG_PATH::$config_path"
 
       - name: Install APK on device
-        run: adb install ../../snippet_uiautomator/android/uiautomator.apk
+        run: adb install $CONFIG_PATH
 
       - name: Run UI Automator tests
-        run: adb shell uiautomator runtest ../../snippet_uiautomator/android/test.jar -c com.example.TestClass
+        run: |
+          current_dir=$(dirname "$0")
+          test_path="$current_dir/../snippet_uiautomator/android/test.jar"
+          adb shell uiautomator runtest $test_path -c com.example.TestClass
