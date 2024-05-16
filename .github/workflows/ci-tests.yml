@@ -41,12 +41,7 @@ jobs:
           # Start the emulator here, replacing $EMULATOR_NAME with your emulator name
           "${{ env.ANDROID_HOME }}/emulator/emulator @$EMULATOR_NAME -no-snapshot -no-audio -no-window"
 
-      - name: Wait for Emulator to Boot
-        run: |
-          # Wait for the emulator to fully boot before proceeding with tests
-          "${{ env.ANDROID_HOME }}/platform-tools/adb wait-for-device shell 'while [[ -z $(${env:ANDROID_HOME}\platform-tools\adb shell getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'"
-
-
+     
 
       - name: Set up Python
         uses: actions/setup-python@v3
