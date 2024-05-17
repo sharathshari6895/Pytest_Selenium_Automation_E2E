@@ -69,7 +69,7 @@ class TestAPITest:
     and checks if the first name and last name are updated correctly. """
 
     @pytest.mark.run(order=9)
-     @pytest.mark.timeout(1000)
+    @pytest.mark.timeout(1000)
     @allure.severity(allure.severity_level.CRITICAL)
     def test_update_booking(self, api_data_fixture, auth_token, created_booking_id, api_config_from_ini):
         allure.attach('Starting test_update_booking', attachment_type=allure.attachment_type.TEXT)
