@@ -58,6 +58,7 @@ jobs:
           Expand-Archive -Path "allure-2.14.0.zip" -DestinationPath "$env:USERPROFILE"
           $env:Path += ";$env:USERPROFILE\allure-2.14.0\bin"
           allure --version
+          $env:Path
           
       - name: Run tests
         run: |
