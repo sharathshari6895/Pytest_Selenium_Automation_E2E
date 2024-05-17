@@ -47,9 +47,7 @@ jobs:
         run: |
           "${{ env.ANDROID_HOME }}/emulator/emulator @$EMULATOR_NAME -no-snapshot -no-audio -no-window"
           
-      - name: Wait for Emulator to Boot
-        run: |
-          "${{ env.ANDROID_HOME }}/platform-tools/adb wait-for-device shell 'while [[ -z $(${env.ANDROID_HOME}/platform-tools/adb shell getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'"
+     
           
       - name: Install dependencies
         run: |
