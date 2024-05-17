@@ -23,6 +23,7 @@ pytest
 pytest-html
 pytest-metadata
 pytest-ordering
+pytest-timeout
 requests
 selenium
 setuptools
