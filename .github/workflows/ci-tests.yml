@@ -57,8 +57,6 @@ jobs:
           Invoke-WebRequest -Uri "https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip" -OutFile "allure-2.14.0.zip"
           Expand-Archive -Path "allure-2.14.0.zip" -DestinationPath "$env:USERPROFILE"
           $env:Path += ";$env:USERPROFILE\allure-2.14.0\bin"
-          allure --version
-          $env:Path
           
       - name: Run tests
         run: |
@@ -66,7 +64,8 @@ jobs:
       
       - name: Generate Allure report
         run: |
-          allure generate ./allure_results -o ./allure-report --clean
+          $allurePath = Join-Path $env:USERPROFILE "allure-2.14.0\bin\allure.bat"
+          & $allurePath generate ./allure_results -o ./allure-report --clean
           
       - name: Upload Allure report artifacts
         uses: actions/upload-artifact@v3
