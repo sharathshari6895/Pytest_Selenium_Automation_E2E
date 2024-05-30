@@ -18,10 +18,10 @@ jobs:
       with:
         node-version: '18'
  
-    - name: Clean install dependencies
-      run: |
-        rm -rf node_modules
-        npm install
+    # - name: Clean install dependencies
+    #   run: |
+    #     rm -rf node_modules
+    #     npm install
  
     # - name: Verify android_wdio.conf.js exists
     #   run: ls -la ./android_wdio.conf.js
