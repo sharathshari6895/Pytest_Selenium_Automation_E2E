@@ -74,6 +74,12 @@ def created_booking_id(api_data_fixture, auth_token, api_config_from_ini):
     return response.json().get("bookingid", '')
 
 
+import sys
+from unittest.mock import MagicMock
+
+# Mock pyautogui
+sys.modules['pyautogui'] = MagicMock()
+sys.modules['mouseinfo'] = MagicMock()
 
 
 
