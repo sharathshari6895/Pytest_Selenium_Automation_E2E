@@ -13,15 +13,21 @@ jobs:
     - name: Checkout the repository
       uses: actions/checkout@v4
  
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
+    # - name: Set up Node.js
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: '18'
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
       with:
-        node-version: '18'
+        python-version: '3.9'
  
-    # - name: Clean install dependencies
-    #   run: |
-    #     rm -rf node_modules
-    #     npm install
+    - name: Clean install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
  
     # - name: Verify android_wdio.conf.js exists
     #   run: ls -la ./android_wdio.conf.js
@@ -30,7 +36,7 @@ jobs:
       run: |
         npm install -g appium
         appium -v
-        appium &>/dev/null &
+        # appium &>/dev/null &
  
     - name: Print Node.js version
       run: node -v
