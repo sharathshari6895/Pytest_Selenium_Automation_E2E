@@ -242,7 +242,8 @@ def appium_driver_setup(request):
         "auto_accept_alerts": mobile_config['auto_accept_alerts'],
         "unhandled_prompt_behavior": mobile_config['unhandled_prompt_behavior'],
         "timeout": mobile_config['timeout'],
-        "noReset": mobile_config['noReset']
+        "noReset": mobile_config['noReset'],
+        "appPath": mobile_config['appPath']
     }
 
     driver = webdriver.Remote(mobile_config['appium_server_url'], options=AppiumOptions().load_capabilities(cap))
