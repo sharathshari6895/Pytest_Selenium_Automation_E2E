@@ -242,7 +242,7 @@ def appium_driver_setup(request):
         "auto_accept_alerts": mobile_config['auto_accept_alerts'],
         "unhandled_prompt_behavior": mobile_config['unhandled_prompt_behavior'],
         "timeout": mobile_config['timeout'],
-        "noReset": mobile_config['noReset'],
+        # "noReset": mobile_config['noReset'],
         "app": mobile_config['appPath']
     }
 
