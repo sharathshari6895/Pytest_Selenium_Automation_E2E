@@ -1,74 +1,42 @@
-name: UI Automator Tests
-
+name: mobile automation
+ 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+ 
 jobs:
-  setup-and-run-tests:
-    runs-on: windows-latest
-
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.9'
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-
-      - name: Check Node.js and npm version
-        run: |
-          node -v
-          npm -v
-          
-      - name: Install Allure CLI
-        run: |
-          Invoke-WebRequest -Uri "https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip" -OutFile "allure-2.14.0.zip"
-          Expand-Archive -Path "allure-2.14.0.zip" -DestinationPath "C:\allure-2.14.0"
-          $env:Path += ";C:\allure-2.14.0\allure-2.14.0\bin"
-          allure --version
-          
-      - name: Set up Android SDK
-        run: |
-          echo "ANDROID_HOME=${{ env.ANDROID_HOME }}" >> $GITHUB_ENV
-          echo "PATH=${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin;${{ env.ANDROID_HOME }}/emulator;${{ env.ANDROID_HOME }}/tools;${{ env.ANDROID_HOME }}/platform-tools;${{ env.ANDROID_HOME }}/build-tools/${{ env.ANDROID_BUILD_TOOLS_VERSION }}:$PATH" >> $GITHUB_ENV
-          
-      - name: Start Android Emulator
-        run: |
-          "${{ env.ANDROID_HOME }}/emulator/emulator @$EMULATOR_NAME -no-snapshot -no-audio -no-window"
-          
-     
-          
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Install Allure CLI
-        run: |
-          Invoke-WebRequest -Uri "https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip" -OutFile "allure-2.14.0.zip"
-          Expand-Archive -Path "allure-2.14.0.zip" -DestinationPath "$env:USERPROFILE"
-          $env:Path += ";$env:USERPROFILE\allure-2.14.0\bin"
-          
-      - name: Run tests
-        run: |
-          python run_tests.py
-      
-      - name: Generate Allure report
-        run: |
-          $allurePath = Join-Path $env:USERPROFILE "allure-2.14.0\bin\allure.bat"
-          & $allurePath generate ./allure_results -o ./allure-report --clean
-          
-      - name: Upload Allure report artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-report
-          path: ./allure-report
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+ 
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+ 
+    - name: Clean install dependencies
+      run: |
+        rm -rf node_modules
+        npm install
+ 
+    # - name: Verify android_wdio.conf.js exists
+    #   run: ls -la ./android_wdio.conf.js
+ 
+    - name: Set up Appium
+      run: |
+        npm install -g appium
+        appium -v
+        appium &>/dev/null &
+ 
+    - name: Print Node.js version
+      run: node -v
+ 
+    - name: Run Appium Android tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 10
+        script:  python run_tests.py
