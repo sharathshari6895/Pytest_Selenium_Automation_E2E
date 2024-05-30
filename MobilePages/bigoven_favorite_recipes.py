@@ -122,6 +122,7 @@ class BigOvenFavoriteRecipe(AppiumEvents):
 
     """Clicks on the search input field."""
     def click_on_search_input(self):
+        time.sleep(5)
         self.do_click(self.search_icon_locator)
         self.do_click(self.search_input_locator)
 
