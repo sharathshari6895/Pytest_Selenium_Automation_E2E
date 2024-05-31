@@ -55,10 +55,11 @@ jobs:
 
     - name: Generate Allure report
       run: |
-        $HOME/allure-2.14.0/bin/allure generate ./allure_results -o ./allure-report --clean
+        $HOME/allure-2.14.0/bin/allure generate ./allure generate allure_results --clean -o allure_results
+
 
     - name: Upload Allure report artifacts
       uses: actions/upload-artifact@v3
       with:
          name: allure-report
-         path: ./allure-report
+         path: ./allure_results
