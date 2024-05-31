@@ -45,6 +45,9 @@ jobs:
  
     - name: Print Node.js version
       run: node -v
+
+    - name: Print ADB devices
+      run: adb devices
  
     - name: Run Appium Android tests
       uses: reactivecircus/android-emulator-runner@v2
