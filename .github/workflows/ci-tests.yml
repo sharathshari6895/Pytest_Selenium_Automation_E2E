@@ -14,14 +14,13 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.9'
+      uses: actions/setup-python@v4
 
     - name: Clean install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install allure-pytest
 
     - name: Set up Appium
       run: |
@@ -39,13 +38,17 @@ jobs:
     - name: Print ADB devices
       run: adb devices
 
+    - name: Clean Allure results directory
+      run: |
+        if [ -d "allure_results" ]; then rm -rf allure_results; fi
+
     - name: Run Appium Android tests
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 29
         script: |
           adb devices
-          python run_tests.py
+          python run_tests.py --alluredir=allure_results
 
     - name: Install Allure
       run: |
@@ -55,11 +58,10 @@ jobs:
 
     - name: Generate Allure report
       run: |
-        $HOME/allure-2.14.0/bin/allure generate ./allure generate allure_results --clean -o allure_results
-
+        $HOME/allure-2.14.0/bin/allure generate allure_results -o allure-report --clean
 
     - name: Upload Allure report artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
          name: allure-report
-         path: ./allure_results
+         path: allure-report
