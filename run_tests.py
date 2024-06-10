@@ -14,7 +14,7 @@ def run_tests(test_file):
 with ThreadPoolExecutor(max_workers=4) as executor:
     futures = [
         # executor.submit(run_tests, ui_test_file),
-        executor.submit(run_tests, "./Tests/UI_Test"),
+        executor.submit(run_tests, "../Tests/UI_Test"),
         executor.submit(run_tests, api_test_file),
         executor.submit(run_tests, mobile_test_file),
         executor.submit(run_tests, accessibility_test_file)
