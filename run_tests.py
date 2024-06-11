@@ -6,7 +6,7 @@ from Utils.file_util import ui_test_file, api_test_file, mobile_test_file, acces
 """subprocess module allows you to run external commands, connect to their input/output/error pipes, and obtain their return codes."""
 
 
-def run_tests(test_file):
+def run_tests():
     subprocess.run(["pytest", "--alluredir=./allure_results"])
 
 
