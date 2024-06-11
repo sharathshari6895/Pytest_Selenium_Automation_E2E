@@ -20,7 +20,7 @@ def run_tests(test_file):
 #         executor.submit(run_tests, accessibility_test_file)
 #     ]
 
-with ThreadPoolExecutor(max_workers=4) as executor:
+with ThreadPoolExecutor(max_workers=1) as executor:
     futures = [
         executor.submit(run_tests)
          
