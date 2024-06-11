@@ -22,7 +22,7 @@ def run_tests(test_file):
 
 with ThreadPoolExecutor(max_workers=1) as executor:
     futures = [
-        executor.submit(run_tests)
+        executor.submit(run_tests,ui_test_file)
          
     ]
 
