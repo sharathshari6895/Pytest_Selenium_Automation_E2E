@@ -1,5 +1,6 @@
 import subprocess
 import logging
+import sys
 from concurrent.futures import ThreadPoolExecutor
 
 # Set up logging
@@ -8,7 +9,9 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 def run_tests(test_path):
     try:
         logging.info(f"Running tests in {test_path}...")
-        result = subprocess.run(["pytest", test_path, "--alluredir=./allure_results"], check=True)
+
+        # Use sys.executable to call pytest
+        result = subprocess.run([sys.executable, "-m", "pytest", test_path, "--alluredir=./allure_results"], check=True)
         logging.info(f"Tests in {test_path} finished with return code: {result.returncode}")
     except subprocess.CalledProcessError as e:
         logging.error(f"An error occurred while running tests in {test_path}: {e}")
