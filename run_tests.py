@@ -7,7 +7,7 @@ from Utils.file_util import ui_test_file, api_test_file, mobile_test_file, acces
 
 
 def run_tests(test_file):
-    subprocess.run(["pytest", test_file, "--alluredir=./allure_results"])
+    subprocess.run(["pytest", "--alluredir=./allure_results"])
 
 
 # Create a ThreadPoolExecutor with 3 worker threads
@@ -22,7 +22,7 @@ def run_tests(test_file):
 
 with ThreadPoolExecutor(max_workers=1) as executor:
     futures = [
-        executor.submit(run_tests,"./Tests/UI_Test")
+        executor.submit(run_tests)
          
     ]
 
