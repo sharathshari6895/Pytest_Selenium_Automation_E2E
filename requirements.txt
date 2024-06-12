@@ -36,3 +36,4 @@ trio-websocket
 urllib3
 wsproto
 Pillow
+
