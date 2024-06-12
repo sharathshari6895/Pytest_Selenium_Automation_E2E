@@ -9,7 +9,7 @@ def run_tests(test_path):
 def main():    
     test_files = [
         # "./Tests/UI_Test",
-        # "./Tests/API_Test",
+        "./Tests/API_Test",
         # "./Tests/Mobile_Test",
         "./Tests/Accessibility_Test"
     ]
