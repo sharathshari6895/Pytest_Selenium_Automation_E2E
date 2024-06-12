@@ -4,7 +4,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 
 def run_tests(test_path):
-    result = subprocess.run([sys.executable, "pytest", test_path, "--alluredir=./allure_results"])
+    result = subprocess.run([sys.executable,"-m", "pytest", test_path, "--alluredir=./allure_results",check=True])
 
 def main():    
     test_files = [
