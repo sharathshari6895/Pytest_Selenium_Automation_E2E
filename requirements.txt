@@ -24,6 +24,7 @@ pytest-html
 pytest-metadata
 pytest-ordering
 pytest-timeout
+reportportal-client
 requests
 selenium
 setuptools
