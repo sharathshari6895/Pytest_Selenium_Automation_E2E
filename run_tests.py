@@ -10,8 +10,12 @@ def run_tests(test_path):
     try:
         logging.info(f"Running tests in {test_path}...")
 
-        # Use sys.executable to call pytest
-        result = subprocess.run([sys.executable, "-m", "pytest", test_path, "--alluredir=./allure_results"], check=True)
+        # Use sys.executable to call pytest with ReportPortal options
+        result = subprocess.run([
+            sys.executable, "-m", "pytest", test_path,
+            "--alluredir=./allure_results",
+            "--reportportal"
+        ], check=True)
         logging.info(f"Tests in {test_path} finished with return code: {result.returncode}")
     except subprocess.CalledProcessError as e:
         logging.error(f"An error occurred while running tests in {test_path}: {e}")
