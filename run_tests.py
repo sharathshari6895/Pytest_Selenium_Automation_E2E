@@ -3,14 +3,27 @@ import logging
 import sys
 from concurrent.futures import ThreadPoolExecutor
 
-def run_tests(test_path):
-    result = subprocess.run([sys.executable,"-m", "pytest", test_path, "--alluredir=./allure_results",check=True])
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def main():    
+def run_tests(test_path):
+    try:
+        logging.info(f"Running tests in {test_path}...")
+
+        # Use sys.executable to call pytest
+        result = subprocess.run([sys.executable, "-m", "pytest", test_path, "--alluredir=./allure_results"], check=True)
+        logging.info(f"Tests in {test_path} finished with return code: {result.returncode}")
+    except subprocess.CalledProcessError as e:
+        logging.error(f"An error occurred while running tests in {test_path}: {e}")
+    except FileNotFoundError as e:
+        logging.error(f"Executable not found: {e}")
+
+def main():
+    # Define test files
     test_files = [
-        # "./Tests/UI_Test",
+        "./Tests/UI_Test",
         "./Tests/API_Test",
-        # "./Tests/Mobile_Test",
+        "./Tests/Mobile_Test",
         "./Tests/Accessibility_Test"
     ]
 
@@ -23,6 +36,8 @@ def main():
                 future.result(timeout=3600)
             except Exception as e:
                 logging.error(f"An error occurred: {e}")
+
+    logging.info("All test files have been executed.")
 
 if __name__ == "__main__":
     main()
