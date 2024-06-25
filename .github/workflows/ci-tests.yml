@@ -15,17 +15,23 @@ jobs:
 
     - name: Set up Python
       uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'  # Specify the Python version you need
 
-    - name: Clean install dependencies
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install allure-pytest
 
-    - name: Set up Appium
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Specify the Node.js version you need
+
+    - name: Install global dependencies
       run: |
-        npm install -g appium
-        appium -v
+        npm install -g appium@latest
 
     - name: Install Appium drivers
       run: |
@@ -35,33 +41,27 @@ jobs:
     - name: Print Node.js version
       run: node -v
 
-    - name: Print ADB devices
-      run: adb devices
-
     - name: Clean Allure results directory
       run: |
         if [ -d "allure_results" ]; then rm -rf allure_results; fi
 
     - name: Run Appium Android tests
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 29
-        script: |
-          adb devices
-          python run_tests.py --alluredir=allure_results
+      run: |
+        adb devices
+        python run_tests.py --alluredir=allure_results
 
-    - name: Install Allure
+    - name: Download and Install Allure
       run: |
         curl -o allure-2.14.0.zip -Ls https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip
         unzip -q allure-2.14.0.zip -d $HOME
-        export PATH=$HOME/allure-2.14.0/bin:$PATH
+        echo "export PATH=$HOME/allure-2.14.0/bin:$PATH" >> $GITHUB_ENV
 
     - name: Generate Allure report
       run: |
-        $HOME/allure-2.14.0/bin/allure generate allure_results -o allure-report --clean
+        allure generate allure_results -o allure-report --clean
 
     - name: Upload Allure report artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v2
       with:
-         name: allure-report
-         path: allure-report
+        name: allure-report
+        path: allure-report
