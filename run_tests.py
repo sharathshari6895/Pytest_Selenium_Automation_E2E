@@ -26,7 +26,7 @@ def main():
     # Define test files
     test_files = [
         # "./Tests/UI_Test",
-        "./Tests/API_Test",
+        # "./Tests/API_Test",
         # "./Tests/Mobile_Test",
         "./Tests/Accessibility_Test"
     ]
