@@ -1,67 +1,75 @@
-name: mobile automation
 
+name: mobile automation
+ 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+ 
 jobs:
   build:
     runs-on: macos-12
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v4
-
+ 
     - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'  # Specify the Python version you need
-
-    - name: Install dependencies
+      uses: actions/setup-python@v4
+ 
+    - name: Clean install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install allure-pytest
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'  # Specify the Node.js version you need
-
-    - name: Install global dependencies
+ 
+    - name: Set up Appium
       run: |
-        npm install -g appium@latest
-
+        npm install -g appium
+        appium -v
+ 
     - name: Install Appium drivers
       run: |
         appium driver install uiautomator2
         appium driver install xcuitest
-
+ 
     - name: Print Node.js version
       run: node -v
-
+ 
+    - name: Print ADB devices
+      run: adb devices
+ 
     - name: Clean Allure results directory
       run: |
         if [ -d "allure_results" ]; then rm -rf allure_results; fi
 
-    - name: Run Appium Android tests
+    - name: Install Allure
       run: |
-        adb devices
-        python run_tests.py --alluredir=allure_results
-
-    - name: Download and Install Allure
-      run: |
-        wget -O allure-2.14.0.zip https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.14.0/allure-commandline-2.14.0.zip
+        curl -o allure-2.14.0.zip -Ls https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip
         unzip -q allure-2.14.0.zip -d $HOME
-        echo "export PATH=$HOME/allure-2.14.0/bin:$PATH" >> $GITHUB_ENV
-
+        export PATH=$HOME/allure-2.14.0/bin:$PATH
+ 
+    - name: Run Appium Android tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 29
+        script: |
+          adb devices
+          python run_tests.py --alluredir=allure_results
+ 
+    
+ 
     - name: Generate Allure report
       run: |
-        allure generate allure_results -o allure-report --clean
-
+        $HOME/allure-2.14.0/bin/allure generate allure_results -o allure-report --clean
+ 
     - name: Upload Allure report artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
+      with:
+         name: allure-report
+         path: allure-report
+
+
       with:
         name: allure-report
         path: allure-report
