@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.3'  # Adjust as per your Python version requirement
+          python-version: '3'  # Adjust as per your Python version requirement
 
       - name: Install Dependencies
         run: |
