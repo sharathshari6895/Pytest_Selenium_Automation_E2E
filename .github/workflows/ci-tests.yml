@@ -55,7 +55,7 @@ jobs:
         api-level: 29
         script: |
           adb devices
-          pytest --alluredir=./allure_results --capture=sys
+          pytest --alluredir=./allure_results 
 
     - name: Print Allure results directory contents
       run: |
