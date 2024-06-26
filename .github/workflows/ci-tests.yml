@@ -1,83 +1,86 @@
-name: mobile automation
+name: Mobile Automation Workflow
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: macos-12
+
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.3'  # Adjust as per your Python version requirement
 
-    - name: Clean install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install allure-pytest
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install allure-pytest
 
-    - name: Set up Appium
-      run: |
-        npm install -g appium
-        appium -v
+      - name: Set up Node.js and Appium
+        run: |
+          npm install -g appium
+          appium -v
 
-    - name: Install Appium drivers
-      run: |
-        appium driver install uiautomator2
-        appium driver install xcuitest
+      - name: Install Appium Drivers
+        run: |
+          appium driver install uiautomator2
+          appium driver install xcuitest
 
-    - name: Print Node.js version
-      run: node -v
+      - name: Print Node.js Version
+        run: node -v
 
-    - name: Print ADB devices
-      run: adb devices
+      - name: Print ADB Devices
+        run: adb devices
 
-    - name: Clean Allure report directory
-      run: |
-        if [ -d "allure-report" ]; then rm -rf allure-report; fi
+      - name: Clean Allure Results Directory
+        run: |
+          if [ -d "allure-results" ]; then rm -rf allure-results; fi
+          if [ -d "allure-report" ]; then rm -rf allure-report; fi
 
-    - name: Install Allure
-      run: |
-        curl -o allure-2.14.0.zip -Ls https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip
-        unzip -q allure-2.14.0.zip -d $HOME
-        export PATH=$HOME/allure-2.14.0/bin:$PATH
+      - name: Install Allure CLI
+        run: |
+          curl -o allure-2.14.0.zip -Ls https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip
+          unzip -q allure-2.14.0.zip -d $HOME
+          export PATH=$HOME/allure-2.14.0/bin:$PATH
 
-    - name: Run Appium Android tests
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 29
-        script: |
-          adb devices
-          pytest --alluredir=./allure_results --capture=sys
+      - name: Run Appium Android Tests
+        run: |
+          adb devices  # Ensure devices are detected
+          pytest --alluredir=./allure-results --capture=sys
 
-    - name: Print Allure results directory contents
-      run: |
-        echo "Contents of allure_results directory:"
-        ls -l allure_results
+      - name: Print Allure Results Directory Contents
+        run: |
+          echo "Contents of allure-results directory:"
+          ls -l allure-results
 
-    - name: Upload Allure results artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: allure-results
-        path: allure_results
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-results
+          path: allure-results
 
-    - name: Generate Allure report
-      run: |
-        $HOME/allure-2.14.0/bin/allure generate allure_results -o allure-report --clean
+      - name: Generate Allure Report
+        run: |
+          allure generate allure-results -o allure-report --clean
 
-    - name: Print Allure report directory contents
-      run: |
-        echo "Contents of allure-report directory:"
-        ls -l allure-report
+      - name: Print Allure Report Directory Contents
+        run: |
+          echo "Contents of allure-report directory:"
+          ls -l allure-report
 
-    - name: Upload Allure report artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: allure-report
-        path: allure-report
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: allure-report
