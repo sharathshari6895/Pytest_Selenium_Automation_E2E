@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3'  # Adjust as per your Python version requirement
+          python-version: '3.x'
 
       - name: Install Dependencies
         run: |
@@ -50,13 +50,13 @@ jobs:
 
       - name: Install Allure CLI
         run: |
-          curl -o allure-2.14.0.zip -Ls https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip
+          wget -O allure-2.14.0.zip -q https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip
           unzip -q allure-2.14.0.zip -d $HOME
-          export PATH=$HOME/allure-2.14.0/bin:$PATH
+          echo "export PATH=$HOME/allure-2.14.0/bin:$PATH" >> $HOME/.bash_profile
 
       - name: Run Appium Android Tests
         run: |
-          adb devices  # Ensure devices are detected
+          adb devices
           pytest --alluredir=./allure-results --capture=sys
 
       - name: Print Allure Results Directory Contents
@@ -72,6 +72,7 @@ jobs:
 
       - name: Generate Allure Report
         run: |
+          source $HOME/.bash_profile
           allure generate allure-results -o allure-report --clean
 
       - name: Print Allure Report Directory Contents
@@ -84,3 +85,4 @@ jobs:
         with:
           name: allure-report
           path: allure-report
+
