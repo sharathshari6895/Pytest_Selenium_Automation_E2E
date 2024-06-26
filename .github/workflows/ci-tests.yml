@@ -58,7 +58,12 @@ jobs:
           adb devices
           python run_tests.py 
  
-    
+    - name: Check Allure results
+      run: |
+        if [ ! -d "allure_results" ] || [ -z "$(ls -A allure_results)" ]; then
+          echo "Error: allure_results directory is missing or empty"
+          exit 1
+        fi
  
     - name: Generate Allure report
       run: |
