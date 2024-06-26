@@ -70,6 +70,3 @@ jobs:
          path: allure-report
 
 
-      with:
-        name: allure-report
-        path: allure-report
