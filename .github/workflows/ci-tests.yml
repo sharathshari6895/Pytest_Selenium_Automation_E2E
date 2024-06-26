@@ -42,7 +42,7 @@ jobs:
     - name: Clean Allure results directory
       run: |
         if [ -d "allure_results" ]; then rm -rf allure_results; fi
-        if [ -d "allure_report" ]; then rm -rf allure_report; fi
+        if [ -d "allure-report" ]; then rm -rf allure-report; fi
 
     - name: Install Allure
       run: |
