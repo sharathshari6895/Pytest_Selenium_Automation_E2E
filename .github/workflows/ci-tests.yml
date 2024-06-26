@@ -38,9 +38,8 @@ jobs:
     - name: Print ADB devices
       run: adb devices
 
-    - name: Clean Allure results directory
+    - name: Clean Allure report directory
       run: |
-        if [ -d "allure_results" ]; then rm -rf allure_results; fi
         if [ -d "allure-report" ]; then rm -rf allure-report; fi
 
     - name: Install Allure
@@ -55,23 +54,27 @@ jobs:
         api-level: 29
         script: |
           adb devices
-          pytest --alluredir=./allure_results 
+          pytest --alluredir=./allure_results --capture=sys
 
     - name: Print Allure results directory contents
       run: |
         echo "Contents of allure_results directory:"
         ls -l allure_results
 
-    - name: Check Allure results
-      run: |
-        if [ ! -d "allure_results" ] || [ -z "$(ls -A allure_results)" ]; then
-          echo "Error: allure_results directory is missing or empty"
-          exit 1
-        fi
+    - name: Upload Allure results artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results
+        path: allure_results
 
     - name: Generate Allure report
       run: |
         $HOME/allure-2.14.0/bin/allure generate allure_results -o allure-report --clean
+
+    - name: Print Allure report directory contents
+      run: |
+        echo "Contents of allure-report directory:"
+        ls -l allure-report
 
     - name: Upload Allure report artifacts
       uses: actions/upload-artifact@v4
