@@ -53,6 +53,7 @@ jobs:
           wget -O allure-2.14.0.zip -q https://github.com/allure-framework/allure2/releases/download/2.14.0/allure-2.14.0.zip
           unzip -q allure-2.14.0.zip -d $HOME
           echo "export PATH=$HOME/allure-2.14.0/bin:$PATH" >> $HOME/.bash_profile
+          source $HOME/.bash_profile
 
       - name: Run Appium Android Tests
         run: |
@@ -86,3 +87,12 @@ jobs:
           name: allure-report
           path: allure-report
 
+      - name: Zip Allure Report
+        run: |
+          zip -r allure-report.zip allure-report
+
+      - name: Upload Allure Report Zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report-zip
+          path: allure-report.zip
